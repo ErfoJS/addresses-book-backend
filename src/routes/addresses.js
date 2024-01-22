@@ -3,6 +3,7 @@ import addressService from '../services/addresses';
 import { WrongUuidFormat } from '../exceptions/wrongUuidFormat';
 import { AccountNotFound } from '../exceptions/accountNotFound';
 import { AddressNotFound } from '../exceptions/addressNotFound';
+
 const adressesRoutes = Router({ mergeParams: true });
 
 adressesRoutes.get('', async (req, res) => {
@@ -24,7 +25,7 @@ adressesRoutes.get('/:addressId', async (req, res) => {
   try {
     const address = await addressService.getById(
       req.params.accountId,
-      req.params.addressId
+      req.params.addressId,
     );
     return res.status(200).json(address);
   } catch (error) {

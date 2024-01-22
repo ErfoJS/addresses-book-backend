@@ -28,5 +28,15 @@ accountsRoutes.get('/:id', async (req, res) => {
     return res.status(500).send(error);
   }
 });
+
+accountsRoutes.post('', async (req, res) => {
+  try {
+    const accountUser = req.body;
+    const id = await accountService.create(accountUser); // valdiacja w serwisie do zrobienia
+    return res.status(201).json({ id });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
 // exports.accountsRoutes = accountsRoutes;
 export default accountsRoutes;

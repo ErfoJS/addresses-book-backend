@@ -5,7 +5,6 @@ import accountsRoutes from './src/routes/accounts';
 import addressesRoutes from './src/routes/addresses';
 
 const app = express();
-const router = express.Router();
 // Define routes and middleware here
 app.use(bodyParser.json());
 dotenv.config();

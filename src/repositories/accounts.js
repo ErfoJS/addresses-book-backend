@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { AccountNotFound } from '../exceptions/accountNotFound';
 import { database } from './db';
 
@@ -17,4 +18,27 @@ const getById = async (id) => {
   return account;
 };
 
-export default { getAll, getById };
+const createAccount = async (account, trx) => {
+  const id = randomUUID();
+  await database
+    .transacting(trx)
+    .insert({
+      id,
+      firstname: account.firstname,
+      lastname: account.lastname,
+      dateOfBirth: account.dateOfBirth,
+      sex: account.sex,
+      avatar: account.avatar,
+    })
+    .into(ACCOUNTS_TABLE_NAME);
+  return id;
+};
+
+const assignUserToAccount = async (accountId, userId, trx) => {
+  await database(ACCOUNTS_TABLE_NAME)
+    .transacting(trx)
+    .update({ userId })
+    .where({ id: accountId });
+};
+
+export default { getAll, getById, createAccount, assignUserToAccount };
