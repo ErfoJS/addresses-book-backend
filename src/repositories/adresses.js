@@ -34,4 +34,10 @@ const createAddress = async (accountId, address) => {
     .into(ADDRESSES_TABLE_NAME);
 };
 
-export default { getAll, getById, createAddress };
+const deleteAddress = async (accountId, addressId) => {
+  await database(ADDRESSES_TABLE_NAME)
+    .where({ id: addressId, accountId })
+    .del();
+};
+
+export default { getAll, getById, createAddress, deleteAddress };

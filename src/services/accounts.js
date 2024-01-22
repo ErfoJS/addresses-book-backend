@@ -3,6 +3,7 @@ import accountsRepo from '../repositories/accounts';
 import { database } from '../repositories/db';
 import usersRepo from '../repositories/users'; // user service
 
+// eslint-disable-next-line operator-linebreak
 const uuidRegex =
   /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
 
@@ -15,7 +16,7 @@ const getById = (id) => {
   return accountsRepo.getById(id);
 };
 
-const validateAccountUser = (accountUser) => {};
+// const validateAccountUser = (accountUser) => {};
 
 const create = async (accountUser) => {
   const trx = await database.transaction();
@@ -30,7 +31,7 @@ const create = async (accountUser) => {
     return accountId;
   } catch (error) {
     await trx.rollback();
-    throw new Error('Cannot create Account'); //exeptions
+    throw new Error('Cannot create Account'); // exeptions
   }
 };
 export default { getAll, getById, create };

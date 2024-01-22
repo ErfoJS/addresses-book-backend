@@ -63,4 +63,13 @@ addressesRoutes.post('', async (req, res) => {
     return res.sendStatus(500);
   }
 });
+// async???
+addressesRoutes.delete('/:addressId', (req, res) => {
+  try {
+    addressService.deleteAddress(req.params.accountId, req.params.addressId);
+    return res.status(200).send('deleted');
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+});
 export default addressesRoutes;
