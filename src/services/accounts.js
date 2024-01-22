@@ -11,7 +11,7 @@ const getAll = () => accountsRepo.getAll();
 
 const getById = (id) => {
   if (!uuidRegex.test(id)) {
-    throw new WrongUuidFormat('Invalid format (uuid expected)');
+    throw new WrongUuidFormat('Invalid account ID format (uuid expected)');
   }
   return accountsRepo.getById(id);
 };

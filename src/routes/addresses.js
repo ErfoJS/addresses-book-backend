@@ -63,13 +63,28 @@ addressesRoutes.post('', async (req, res) => {
     return res.sendStatus(500);
   }
 });
-// async???
-addressesRoutes.delete('/:addressId', (req, res) => {
+
+addressesRoutes.delete('/:addressId', async (req, res) => {
   try {
-    addressService.deleteAddress(req.params.accountId, req.params.addressId);
-    return res.status(200).send('deleted');
+    await addressService.deleteAddress(
+      req.params.accountId,
+      req.params.addressId,
+    );
+    return res.status(200).json(req.params.addressId);
   } catch (error) {
-    return res.status(500).json(error.message);
+    if (error instanceof WrongUuidFormat) {
+      return res.status(400).json(error.message);
+    }
+    if (error instanceof AccountNotFound) {
+      return res.status(404).json(error.message);
+    }
+    if (error instanceof AddressNotFound) {
+      return res.status(404).json(error.message);
+    }
+    if (error instanceof InvalidAddressData) {
+      return res.status(400).json(error.message);
+    }
+    return res.sendStatus(500);
   }
 });
 export default addressesRoutes;

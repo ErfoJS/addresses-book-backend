@@ -14,7 +14,7 @@ const getAll = async (accountId) => {
 };
 const getById = async (accountId, addressId) => {
   if (!uuidRegex.test(addressId)) {
-    throw new WrongUuidFormat('Invalid format (uuid expected)');
+    throw new WrongUuidFormat('Invalid address ID format (uuid expected)');
   }
   await accountService.getById(accountId);
   return addressesRepo.getById(accountId, addressId);
@@ -34,12 +34,9 @@ const createAddress = async (accountId, address) => {
   return addressesRepo.createAddress(accountId, address);
 };
 
-const deleteAddress = (accountId, addressId) => {
-  try {
-    addressesRepo.deleteAddress(accountId, addressId);
-  } catch (error) {
-    throw new Error(error);
-  }
+const deleteAddress = async (accountId, addressId) => {
+  await getById(accountId, addressId);
+  return addressesRepo.deleteAddress(accountId, addressId);
 };
 // eslint-disable-next-line object-curly-newline
 export default { getAll, getById, createAddress, deleteAddress };
