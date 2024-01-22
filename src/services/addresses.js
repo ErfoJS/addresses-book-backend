@@ -1,3 +1,4 @@
+import { InvalidAddressData } from '../exceptions/invalidAddressData';
 import { WrongUuidFormat } from '../exceptions/wrongUuidFormat';
 import addressesRepo from '../repositories/adresses';
 import accountService from './accounts';
@@ -16,4 +17,18 @@ const getById = async (accountId, addressId) => {
   await accountService.getById(accountId);
   return addressesRepo.getById(accountId, addressId);
 };
-export default { getAll, getById };
+
+const createAddress = async (accountId, address) => {
+  await accountService.getById(accountId);
+  if (
+    typeof address.street !== 'string' ||
+    typeof address.houseNumber !== 'number' ||
+    typeof address.apartmentNumber !== 'number' ||
+    typeof address.city !== 'string' ||
+    typeof address.postalCode !== 'string'
+  ) {
+    throw new InvalidAddressData('Invalid address data');
+  }
+  return addressesRepo.createAddress(accountId, address);
+};
+export default { getAll, getById, createAddress };

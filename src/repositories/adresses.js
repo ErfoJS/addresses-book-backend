@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { AddressNotFound } from '../exceptions/addressNotFound';
 import { database } from './db';
 
@@ -19,4 +20,18 @@ const getById = async (accountId, addressId) => {
   return address;
 };
 
-export default { getAll, getById };
+const createAddress = async (accountId, address) => {
+  await database
+    .insert({
+      id: randomUUID(),
+      accountId,
+      street: address.street,
+      houseNumber: address.houseNumber,
+      apartmentNumber: address.apartmentNumber,
+      city: address.city,
+      postalCode: address.postalCode,
+    })
+    .into(ADDRESSES_TABLE_NAME);
+};
+
+export default { getAll, getById, createAddress };
