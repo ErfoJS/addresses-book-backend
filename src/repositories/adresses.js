@@ -40,4 +40,5 @@ const deleteAddress = async (accountId, addressId) => {
     .del();
 };
 
+// eslint-disable-next-line object-curly-newline
 export default { getAll, getById, createAddress, deleteAddress };

@@ -41,4 +41,5 @@ const deleteAddress = (accountId, addressId) => {
     throw new Error(error);
   }
 };
+// eslint-disable-next-line object-curly-newline
 export default { getAll, getById, createAddress, deleteAddress };
