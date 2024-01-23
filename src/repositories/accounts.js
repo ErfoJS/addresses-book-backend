@@ -41,4 +41,17 @@ const assignUserToAccount = async (accountId, userId, trx) => {
     .where({ id: accountId });
 };
 
-export default { getAll, getById, createAccount, assignUserToAccount };
+const deleteAccount = async (accountId, trx) => {
+  await database(ACCOUNTS_TABLE_NAME)
+    .transacting(trx)
+    .where({ id: accountId })
+    .del();
+};
+
+export default {
+  getAll,
+  getById,
+  createAccount,
+  assignUserToAccount,
+  deleteAccount,
+};

@@ -2,6 +2,9 @@ import { WrongUuidFormat } from '../exceptions/wrongUuidFormat';
 import accountsRepo from '../repositories/accounts';
 import { database } from '../repositories/db';
 import usersRepo from '../repositories/users'; // user service
+// eslint-disable-next-line import/no-cycle
+import addressService from './addresses';
+import usersService from './users';
 
 // eslint-disable-next-line operator-linebreak
 const uuidRegex =
@@ -34,4 +37,21 @@ const create = async (accountUser) => {
     throw new Error('Cannot create Account'); // exeptions
   }
 };
-export default { getAll, getById, create };
+
+const del = async (accountId) => {
+  const trx = await database.transaction();
+  try {
+    console.log('account deletes');
+    await getById(accountId);
+    console.log('account deletes: get by id');
+    await usersService.deleteUserByAccId(accountId, trx);
+    await accountsRepo.deleteAccount(accountId, trx);
+    console.log('account deletes: get by id');
+    await trx.commit();
+  } catch (error) {
+    await trx.rollback();
+    throw new Error('Cannot delete account');
+  }
+};
+// eslint-disable-next-line object-curly-newline
+export default { getAll, getById, create, del };

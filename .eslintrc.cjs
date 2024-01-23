@@ -1,4 +1,5 @@
 module.exports = {
+  plugins: ['jest'],
   env: {
     es2021: true,
     node: true,
