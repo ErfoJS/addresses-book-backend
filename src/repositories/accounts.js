@@ -41,6 +41,22 @@ const assignUserToAccount = async (accountId, userId, trx) => {
     .where({ id: accountId });
 };
 
+const updateAccount = async (accountId, updatingAccount, trx) => {
+  await database(ACCOUNTS_TABLE_NAME)
+    .transacting(trx)
+    .update(
+      {
+        firstname: updatingAccount.firstname,
+        lastname: updatingAccount.lastname,
+        dateOfBirth: updatingAccount.dateOfBirth,
+        sex: updatingAccount.sex,
+        avatar: updatingAccount.avatar,
+      },
+      '*',
+    )
+    .where({ id: accountId });
+};
+
 const deleteAccount = async (accountId, trx) => {
   await database(ACCOUNTS_TABLE_NAME)
     .transacting(trx)
@@ -54,4 +70,5 @@ export default {
   createAccount,
   assignUserToAccount,
   deleteAccount,
+  updateAccount,
 };

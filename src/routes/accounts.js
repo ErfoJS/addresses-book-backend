@@ -6,6 +6,7 @@ import { AccountNotFound } from '../exceptions/accountNotFound';
 import { AddressNotFound } from '../exceptions/addressNotFound';
 import { InvalidAddressData } from '../exceptions/invalidAddressData';
 import { InvalidUserData } from '../exceptions/invalidUserData';
+import { InvalidAccountData } from '../exceptions/invalidAccountData';
 
 const accountsRoutes = Router();
 
@@ -39,6 +40,25 @@ accountsRoutes.post('', async (req, res) => {
     return res.status(201).json({ id });
   } catch (error) {
     return res.status(500).send(error);
+  }
+});
+
+accountsRoutes.patch('/:id', async (req, res) => {
+  try {
+    const updatingAccount = req.body;
+    await accountService.updateAccount(req.params.id, updatingAccount);
+    return res.status(200).send('account updated');
+  } catch (error) {
+    if (error instanceof WrongUuidFormat) {
+      return res.status(400).send(error.message);
+    }
+    if (error instanceof AccountNotFound) {
+      return res.status(404).send(error.message);
+    }
+    if (error instanceof InvalidAccountData) {
+      return res.status(400).json(error.message);
+    }
+    return res.status(500).send(error.message);
   }
 });
 

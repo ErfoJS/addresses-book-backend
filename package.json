@@ -10,7 +10,8 @@
     "create-migration": "npm run knex migrate:make",
     "migrate": "npm run knex migrate:latest",
     "knex": "babel-node node_modules/.bin/knex",
-    "test": "jest"
+    "test": "jest",
+    "type": "module"
   },
   "keywords": [],
   "author": "",

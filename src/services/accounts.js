@@ -2,6 +2,7 @@ import { WrongUuidFormat } from '../exceptions/wrongUuidFormat';
 import accountsRepo from '../repositories/accounts';
 import { database } from '../repositories/db';
 import usersRepo from '../repositories/users'; // user service
+import accountValidation from '../helpers/accountValidation';
 // eslint-disable-next-line import/no-cycle
 import addressService from './addresses';
 import usersService from './users';
@@ -38,15 +39,25 @@ const create = async (accountUser) => {
   }
 };
 
+const updateAccount = async (accountId, updatingAccount) => {
+  const trx = await database.transaction();
+  try {
+    accountValidation.validate(updatingAccount);
+    await getById(accountId);
+    await accountsRepo.updateAccount(accountId, updatingAccount, trx);
+    await trx.commit();
+  } catch (error) {
+    await trx.rollback();
+    throw new Error(error.message);
+  }
+};
+
 const del = async (accountId) => {
   const trx = await database.transaction();
   try {
-    console.log('account deletes');
     await getById(accountId);
-    console.log('account deletes: get by id');
     await usersService.deleteUserByAccId(accountId, trx);
     await accountsRepo.deleteAccount(accountId, trx);
-    console.log('account deletes: get by id');
     await trx.commit();
   } catch (error) {
     await trx.rollback();
@@ -54,4 +65,4 @@ const del = async (accountId) => {
   }
 };
 // eslint-disable-next-line object-curly-newline
-export default { getAll, getById, create, del };
+export default { getAll, getById, create, del, updateAccount };
