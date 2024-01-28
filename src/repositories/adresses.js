@@ -40,5 +40,18 @@ const deleteAddress = async (accountId, addressId) => {
     .del();
 };
 
+const deleteAllAddressesFromAccountId = async (accountId, trx) => {
+  await database(ADDRESSES_TABLE_NAME)
+    .transacting(trx)
+    .where({ accountId })
+    .del();
+};
+
 // eslint-disable-next-line object-curly-newline
-export default { getAll, getById, createAddress, deleteAddress };
+export default {
+  getAll,
+  getById,
+  createAddress,
+  deleteAddress,
+  deleteAllAddressesFromAccountId,
+};

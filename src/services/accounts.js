@@ -1,8 +1,10 @@
 import { WrongUuidFormat } from '../exceptions/wrongUuidFormat';
 import accountsRepo from '../repositories/accounts';
+import addressRepo from '../repositories/adresses';
 import { database } from '../repositories/db';
 import usersRepo from '../repositories/users'; // user service
-import accountValidation from '../helpers/accountValidation';
+import accountUpdateValidation from '../validation/accountUpdateValidation';
+import accountValidation from '../validation/accountValidation';
 // eslint-disable-next-line import/no-cycle
 import addressService from './addresses';
 import usersService from './users';
@@ -35,14 +37,14 @@ const create = async (accountUser) => {
     return accountId;
   } catch (error) {
     await trx.rollback();
-    throw new Error('Cannot create Account'); // exeptions
+    throw new Error(error.message); // exeptions
   }
 };
 
 const updateAccount = async (accountId, updatingAccount) => {
   const trx = await database.transaction();
   try {
-    accountValidation.validate(updatingAccount);
+    accountUpdateValidation.validateUpdate(updatingAccount);
     await getById(accountId);
     await accountsRepo.updateAccount(accountId, updatingAccount, trx);
     await trx.commit();
@@ -56,12 +58,13 @@ const del = async (accountId) => {
   const trx = await database.transaction();
   try {
     await getById(accountId);
+    await addressService.deleteAllAddressesFromAccountId(accountId, trx);
     await usersService.deleteUserByAccId(accountId, trx);
     await accountsRepo.deleteAccount(accountId, trx);
     await trx.commit();
   } catch (error) {
     await trx.rollback();
-    throw new Error('Cannot delete account');
+    throw new Error(error.message);
   }
 };
 // eslint-disable-next-line object-curly-newline

@@ -28,7 +28,6 @@ const createUser = async (user, trx) => {
 
 const deleteUserByAccId = async (accountId, trx) => {
   try {
-    console.log('deletesssss');
     await database(USERS_TABLE_NAME)
       .transacting(trx)
       .where({ accountId })

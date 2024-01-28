@@ -38,5 +38,15 @@ const deleteAddress = async (accountId, addressId) => {
   await getById(accountId, addressId);
   return addressesRepo.deleteAddress(accountId, addressId);
 };
+
+const deleteAllAddressesFromAccountId = async (accountId, trx) => {
+  return addressesRepo.deleteAllAddressesFromAccountId(accountId, trx);
+};
 // eslint-disable-next-line object-curly-newline
-export default { getAll, getById, createAddress, deleteAddress };
+export default {
+  getAll,
+  getById,
+  createAddress,
+  deleteAddress,
+  deleteAllAddressesFromAccountId,
+};

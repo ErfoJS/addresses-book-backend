@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import { AccountNotFound } from '../exceptions/accountNotFound';
 import { database } from './db';
+import { USERS_TABLE_NAME } from './users';
 
 export const ACCOUNTS_TABLE_NAME = 'accounts';
 
@@ -35,10 +36,10 @@ const createAccount = async (account, trx) => {
 };
 
 const assignUserToAccount = async (accountId, userId, trx) => {
-  await database(ACCOUNTS_TABLE_NAME)
+  await database(USERS_TABLE_NAME)
     .transacting(trx)
-    .update({ userId })
-    .where({ id: accountId });
+    .update({ id: userId })
+    .where({ accountId });
 };
 
 const updateAccount = async (accountId, updatingAccount, trx) => {

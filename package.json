@@ -11,6 +11,7 @@
     "migrate": "npm run knex migrate:latest",
     "knex": "babel-node node_modules/.bin/knex",
     "test": "jest",
+    "test:watch": "jest --watch",
     "type": "module"
   },
   "keywords": [],

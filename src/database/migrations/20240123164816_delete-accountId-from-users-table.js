@@ -9,6 +9,7 @@ export async function up(knex) {
   });
 
   await knex.schema.alterTable('users', (table) => {
+    table.dropForeign('acountId');
     table.uuid('accountId').alter().unique();
   });
 }
@@ -23,6 +24,6 @@ export async function down(knex) {
     table.foreign('userId').references('id').inTable('users');
   });
   await knex.schema.alterTable('users', (table) => {
-    table.dropUnique('accountId');
+    table.dropUnique;
   });
 }

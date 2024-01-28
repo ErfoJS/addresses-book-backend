@@ -29,7 +29,7 @@ accountsRoutes.get('/:id', async (req, res) => {
     if (error instanceof AccountNotFound) {
       return res.status(404).send(error.message);
     }
-    return res.status(500).send(error);
+    return res.status(500).send(error.message);
   }
 });
 
@@ -39,7 +39,7 @@ accountsRoutes.post('', async (req, res) => {
     const id = await accountService.create(accountUser); // valdiacja w serwisie do zrobienia
     return res.status(201).json({ id });
   } catch (error) {
-    return res.status(500).send(error);
+    return res.status(500).send(error.message);
   }
 });
 

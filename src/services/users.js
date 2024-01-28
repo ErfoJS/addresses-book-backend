@@ -1,4 +1,4 @@
-import userValidation from '../helpers/userValidation';
+import userValidation from '../validation/userValidation';
 import usersRepo from '../repositories/users';
 
 const getUserByAccId = async (accountId) => {
