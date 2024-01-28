@@ -11,4 +11,9 @@ const deleteUserByAccId = async (accountId, trx) => {
   return usersRepo.deleteUserByAccId(accountId, trx);
 };
 
-export default { getUserByAccId, deleteUserByAccId };
+const changePassword = async (accountId, password) => {
+  await getUserByAccId(accountId);
+  return usersRepo.changePassword(accountId, password);
+};
+
+export default { getUserByAccId, deleteUserByAccId, changePassword };

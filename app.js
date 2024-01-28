@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import accountsRoutes from './src/routes/accounts';
 import addressesRoutes from './src/routes/addresses';
+import usersRoutes from './src/routes/users';
 
 const app = express();
 // Define routes and middleware here
@@ -13,6 +14,7 @@ dotenv.config();
 // app.use('/accounts/:accountId/addresses/:addressId', addressesRoutes);
 app.use('/accounts/:accountId/addresses', addressesRoutes);
 app.use('/accounts', accountsRoutes);
+app.use('/users', usersRoutes);
 
 app.get('/', (req, res) => {
   res.json({ health: true });

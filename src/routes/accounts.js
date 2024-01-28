@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import accountService from '../services/accounts';
+import userService from '../services/users';
 import { WrongUuidFormat } from '../exceptions/wrongUuidFormat';
 import { AccountNotFound } from '../exceptions/accountNotFound';
 import { AddressNotFound } from '../exceptions/addressNotFound';
@@ -85,5 +86,6 @@ accountsRoutes.delete('/:accountId', async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
+
 // exports.accountsRoutes = accountsRoutes;
 export default accountsRoutes;

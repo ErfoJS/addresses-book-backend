@@ -26,6 +26,17 @@ const createUser = async (user, trx) => {
   return id;
 };
 
+const changePassword = async (accountId, password) => {
+  await database(USERS_TABLE_NAME)
+    .update(
+      {
+        password: password,
+      },
+      '*',
+    )
+    .where({ accountId });
+};
+
 const deleteUserByAccId = async (accountId, trx) => {
   try {
     await database(USERS_TABLE_NAME)
@@ -38,4 +49,9 @@ const deleteUserByAccId = async (accountId, trx) => {
   }
 };
 
-export default { createUser, deleteUserByAccId, getUserByAccId };
+export default {
+  createUser,
+  deleteUserByAccId,
+  getUserByAccId,
+  changePassword,
+};
