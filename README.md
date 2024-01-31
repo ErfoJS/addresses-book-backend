@@ -63,13 +63,13 @@ You can comunicate with database througth API endpoints.
 
 ## API Endpoints
 
-- GET /accounts: Get all accounts.
-- GET /accounts/:id: Get a specific account by ID.
-- GET /accounts/:accountId/addresses: Get all addresses from account.
-- GET /accounts/:accountId/addresses/:addressId: Get a specific address.
-- POST /accounts: Create a new account.
-- POST /accounts/:accountId/addresses: Create a new address for account.
-- DELETE /accounts/:accountId/addresses/:addressId: Delete a specific address.
+- GET `/accounts`: Get all accounts.
+- GET `/accounts/:id`: Get a specific account by ID.
+- GET `/accounts/:accountId/addresses`: Get all addresses from account.
+- GET `/accounts/:accountId/addresses/:addressId`: Get a specific address.
+- POST `/accounts`: Create a new account.
+- POST `/accounts/:accountId/addresses`: Create a new address for account.
+- DELETE `/accounts/:accountId/addresses/:addressId`: Delete a specific address.
 
 ## License
 This project is licensed under the MIT License.
